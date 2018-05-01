@@ -7,6 +7,7 @@ import com.example.demo.model.Task;
 import com.example.demo.repository.TaskRepository;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -19,5 +20,17 @@ public class TaskServiceImpl implements TaskService {
 		
 		return taskRepository.findAll();
 		
+	}
+
+	@Override
+	public Mono<Task> createTask(Task task) {
+
+		return taskRepository.save(task);
+	}
+
+	@Override
+	public void deleteTask(String id) {
+		
+		taskRepository.deleteById(id);
 	}
 }
