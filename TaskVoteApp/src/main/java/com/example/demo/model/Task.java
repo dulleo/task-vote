@@ -12,6 +12,14 @@ public class Task {
 	private Integer upVote;
 	private Integer downVote;
 	
+	public Task() {}
+	
+	public Task(String name, int upVote, int downVote) {
+		this.name = name;
+		this.upVote = upVote;
+		this.downVote = downVote;
+	}
+
 	public String getId() {
 		return id;
 	}
