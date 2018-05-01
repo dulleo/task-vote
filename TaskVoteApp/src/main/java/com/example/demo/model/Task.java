@@ -1,0 +1,42 @@
+package com.example.demo.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
+public class Task {
+	
+	@Id
+	private String id;
+	private String name;
+	private Integer upVote;
+	private Integer downVote;
+	
+	public String getId() {
+		return id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public Integer getUpVote() {
+		return upVote;
+	}
+	
+	public void setUpVote(Integer upVote) {
+		this.upVote = upVote;
+	}
+	
+	public Integer getDownVote() {
+		return downVote;
+	}
+	
+	public void setDownVote(Integer downVote) {
+		this.downVote = downVote;
+	}
+}
