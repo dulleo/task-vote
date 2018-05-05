@@ -3,7 +3,9 @@ package com.example.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.TaskVoteDTO;
 import com.example.demo.model.Task;
+import com.example.demo.model.Vote;
 import com.example.demo.repository.TaskRepository;
 
 import reactor.core.publisher.Flux;
@@ -32,5 +34,28 @@ public class TaskServiceImpl implements TaskService {
 	public void deleteTask(String id) {
 		
 		taskRepository.deleteById(id);
+	}
+	
+	@Override
+	public Mono<Task> vote(TaskVoteDTO taskVoteDTO) {
+		//find task
+		Mono<Task> task = taskRepository.findById(taskVoteDTO.getId());
+		
+		if(task != null) {
+			if(Vote.UPVOTE.equals(taskVoteDTO.getVote())) {
+				task.map(taskData -> {
+					taskData.setUpVote(taskData.getUpVote() + 1);
+					return taskRepository.save(taskData);
+				});
+			} 
+			
+			if(Vote.DOWNVOTE.equals(taskVoteDTO.getVote()))
+				task.map(taskData -> {
+					taskData.setDownVote(taskData.getDownVote() + 1);
+					return taskRepository.save(taskData);
+				});
+		}
+		
+		return null;
 	}
 }
