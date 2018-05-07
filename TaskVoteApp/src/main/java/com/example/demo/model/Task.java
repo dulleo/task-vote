@@ -12,8 +12,14 @@ public class Task {
 	private Integer upVote;
 	private Integer downVote;
 	
+	//Empty constructor is needed for Jakson to deserialize JSON
 	public Task() {}
 	
+	@Override
+	public String toString() {
+		return "Task [id=" + id + ", name=" + name + ", upVote=" + upVote + ", downVote=" + downVote + "]";
+	}
+
 	public Task(String name, int upVote, int downVote) {
 		this.name = name;
 		this.upVote = upVote;
