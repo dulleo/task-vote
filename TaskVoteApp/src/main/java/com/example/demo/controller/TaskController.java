@@ -2,7 +2,10 @@ package com.example.demo.controller;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,17 +27,21 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("")
 public class TaskController {
+	
+	private final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
 	@Autowired
 	private TaskService taskService; 
 	
-	@GetMapping(value = "/tasks")
+	@GetMapping(value = "/tasks", produces = MediaType.TEXT_EVENT_STREAM_VALUE)//produces=MediaType.APPLICATION_STREAM_JSON_VALUE)//produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<Task> getAllTasks() {
-		return taskService.getAllTasks();
+		logger.info("Getting all tasks...");
+		return taskService.getAllTasks().log();
 	}
 	
 	@PostMapping("/tasks")
 	public Mono<Task> createTask(@Valid @RequestBody Task task) {
+		logger.info("Creatting task....");
 		return taskService.createTask(task);
 	}
 	
